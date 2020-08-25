@@ -1,0 +1,25 @@
+cài đặt webpack:
+npm install --save-dev webpack
+sử dụng CLI:
+npm install --save-dev webpack-cli
+
+các thành phần:
+-entry - cửa khẩu: (entry point) cho biết webpack module sẽ được sử dụng để bắt đầu build những sự dependency nội bộ. webpack sẽ
+tìm ra những module hoặc thư viện mà entry point phụ thuộc trực tiếp hay gián tiếp.
+-output: nói với webpack nơi các file bundle sẽ được tạo ra ở folder nào. nó có thể tạo ra và đặt tên cho những file đó,
+nó default: ./dist/main.js cho output file chính và folder ./dist là nơi các file sẽ được generation.
+-loaders: cho phép xử lý xử lý những loại file khác ở trong "module" nó có thể được sử dụng trong application của bạn
+và thêm các dependency, cho phép các developer build nhiều các dependency
+loaders gồm 2 properties:
++ test: được định nghĩa là loại file sẽ được chuyển đổi
++ use: được  định nghĩa là loại loaders nào sẽ được chuyển đổi.
+-plugins : được sử dụng để chuyển đổi một số loại module, các plugins sẽ được sử dụng để thực thi các công việc rộng hơn như tối ưu hoá,
+quản lý assets
+-mode: setting webpack vớI các môi trường (production, development, none), bạn cũng có thể build webpack để tối ưu hoá
+
+sử dụng với angular cần:
+
+để custom webpack:
+npm i @angular-builders/custom-webpack -D
+
+
