@@ -6,8 +6,30 @@ npm install --save-dev webpack-cli
 các thành phần:
 -entry - cửa khẩu: (entry point) cho biết webpack module sẽ được sử dụng để bắt đầu build những sự dependency nội bộ. webpack sẽ
 tìm ra những module hoặc thư viện mà entry point phụ thuộc trực tiếp hay gián tiếp.
++ các cách để configure entry point:
+ single entry: string or [string] khi chúng ta vượt qua 1 mảng files path thì chúng ta sẽ tạo ra 1 multi-main entry (nó được sử dụng khi bạn muốn
+inject nhiều dependency files together and graph những dependency trong chunk)
+ object syntax: được sử dụng sẽ dài dòng hơn, tuy nhiên nó sẽ có thể mở rộng trong entry in application.
+"scalable webpack configuraions có thể được tái sử dụng và kết hợp đến một phần cấu hình. nó là công nghệ phổ biến trong việc sử dụng tách biệt
+giữa build, enveronment, runtime
+khi bạn etry object là {} khi chỉ có entries point generation by plugins
+ scenarios: separate and vendor chÚng ta có thể tạo ra nhiều entrypoint. cùng với đó bạn có thể import libraries mà không sửa đổi(ví dụ: boostrap,
+jquery,..) bên trong vendor.js và chúng sẽ được bundle với nhau trong cùng 1 chunk, hàm băm nôi dụng vẫn giữ nguyên, cho phép browser có thể cache
+chúng riêng biệt và làm giảm thời gian reload.
+ multi page application: ở trong multi-page application, server sẽ lấy new HTML document cho bạn, page sẽ reload this new document và asset sẽ
+ download. tuy nhiên, việc này cho chúng ta sự lựa chọn độc lập để làm những thứ như sử dụng "optimization.splitChunks" để tạo bundle chia sẻ tài
+ nguyên code giữa các page. multi-page application tái sử dụng code/ modules giữa entry points đó là điều thuận lợi từ technique, giống như entry
+ point được tạo.
+
 -output: nói với webpack nơi các file bundle sẽ được tạo ra ở folder nào. nó có thể tạo ra và đặt tên cho những file đó,
 nó default: ./dist/main.js cho output file chính và folder ./dist là nơi các file sẽ được generation.
+chú thích, có thể có nhiều entrypoint, nhưung chỉ có 1 output configure đặc thù.
+multiple entry points: nếu ban có nhiều hơn 1 single "chunk" (multiple entrypoint or sử dụng plugins like CommonsChunkPlugin). bạn nên sử dung sự thay
+thế để đảm bảo rằng mỗi 1 file sẽ có tên độc nhật.
+trong trường hợp có "publicPath" của các tệp đầu ra không biết tại thời điểm compile time, có thể để trống hoặc set dynamic tại runtime thông quan
+biến "__webpack_public_path__" ở entry point
+
+
 -loaders: cho phép xử lý xử lý những loại file khác ở trong "module" nó có thể được sử dụng trong application của bạn
 và thêm các dependency, cho phép các developer build nhiều các dependency
 loaders gồm 2 properties:
@@ -16,6 +38,7 @@ loaders gồm 2 properties:
 -plugins : được sử dụng để chuyển đổi một số loại module, các plugins sẽ được sử dụng để thực thi các công việc rộng hơn như tối ưu hoá,
 quản lý assets
 -mode: setting webpack vớI các môi trường (production, development, none), bạn cũng có thể build webpack để tối ưu hoá
+
 
 sử dụng với angular cần:
 
