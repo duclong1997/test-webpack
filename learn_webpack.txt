@@ -31,7 +31,24 @@ biến "__webpack_public_path__" ở entry point
 
 
 -loaders: cho phép xử lý xử lý những loại file khác ở trong "module" nó có thể được sử dụng trong application của bạn
-và thêm các dependency, cho phép các developer build nhiều các dependency
+và thêm các dependency, cho phép các developer build nhiều các dependency. cho phép bạn xử lý lại các tiến trình file mà bạn đã import hoặc load lại.
+loader giống như loại nhiệm vụ ở trong công cụ build, và cung cấp cách thức để tiến hành các bước build front-end. loaders có thể chuyển đổi ngôn
+ngữ khác (typescript) sang javascript hoặc load inline images as data urls. hoặc cũng có thể import CSS files trực tiếp từ modules javascript.
+có 3 cách sử dụng với loader:
+ configuration: module.rules được sử dụng để cho phép bạn chỉ định 1 số bộ loader trong webpack configuraion.đây là cách ngắn gọn nhất để show loader
+và giúp maintain code.
+loader được đánh giá/ thực thi từ right => left, từ dưới lên trên.
+ inline: có thể chỉ định loader với "import" statement. nó có thể override (ghi đè) lên bất kì loader, preloader , postloader từ configuration.
+bởi tiền tố "!"
+với tiềm tố "!" sẽ disable toàn bộ configure normal loaders.
+vói tiền tố "!!" sẽ disable toàn bộ configure loader (preloader, loader, postloader)
+vói tiền tố "-!" sẽ disable toàn bộ configure loader (preloader, loader) but not postloader.
+ CLI: chỉ định chúng trong 1 shell command.
+ví dụ: webpack --module-bind pug-loader --module-bind 'css=style-loader!css-loader'
+sử dụng the pug-loader for .jade files
+sử dụng style-loader and css-loader for .css files.
+
+
 loaders gồm 2 properties:
 + test: được định nghĩa là loại file sẽ được chuyển đổi
 + use: được  định nghĩa là loại loaders nào sẽ được chuyển đổi.
