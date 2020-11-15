@@ -81,8 +81,10 @@ viết và thực thi các functions biên dịch 1 phần trong của configura
 
 sử dụng với angular cần:
 
-để custom webpack:
-npm i @angular-builders/custom-webpack -D
+để custom webpack cần install :
+npm i @angular-builders/custom-webpack
+or
+npm i @angular-builders/custom-webpack@<version> (có thể thêm @version để install version mong muốn).
 
 chỉnh sửa file angular.json:
 -từ "builder": "@angular-devkit/build-angular:browser" => "builder": "@angular-builders/custom-webpack:browser", (default for ng build)
