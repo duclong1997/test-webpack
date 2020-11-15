@@ -76,7 +76,7 @@ việc cấu hình được xử lý bởi webpack dựa trên các thuộc tín
 import files thông qua require(...)
 import tiện ích (plugin) trên npm thông qua require(...)
 sử dụng javascript control thông qua các biểu thức ví dụ như ?: operator.
-sử dụng các hằng số hoặc biến cho việc sử dụng value.
+sử dụng các hằng số (constant) hoặc biến (variable) cho việc sử dụng value.
 viết và thực thi các functions biên dịch 1 phần trong của configuraion.
 
 sử dụng với angular cần:
@@ -84,4 +84,28 @@ sử dụng với angular cần:
 để custom webpack:
 npm i @angular-builders/custom-webpack -D
 
+chỉnh sửa file angular.json:
+-từ "builder": "@angular-devkit/build-angular:browser" => "builder": "@angular-builders/custom-webpack:browser", (default for ng build)
+-trong architect.build.options thêm:
+"customWebpackConfig": {
+  "path": "./custom-webpack.config.js"
+},
+với 'custom-webpack.config.js' là file custom webpack configuration.
+ngoài ra cũng có thể thêm configuraton cho configuration cho webpack product:
+-trong architect.build.configurations.production thêm:
+"customWebpackConfig": {
+  "path": "./custom-webpack.prod.config.js"
+},
+với 'custom-webpack.prod.config.js' là file custom webpack configuration của product.
 
+enable the configuration for ng serve
+-từ "builder": "@angular-devkit/build-angular:dev-server" => "builder": "@angular-builders/custom-webpack:dev-server",
+-trong serve.build.options thêm:
+ "customWebpackConfig": {
+  "path": "./custom-webpack.config.js"
+},
+-trong serve.configurations.production thêm:
+"customWebpackConfig": {
+  "path": "./custom-webpack.prod.config.js"
+},
+với 'custom-webpack.prod.config.js' là file custom webpack configuration của product.

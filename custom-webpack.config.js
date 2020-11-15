@@ -27,6 +27,11 @@ module.exports = {
     new MomentLocalesPlugin({
       localesToKeep: ["fr"],
     }),
+    // define constant global
+    new webpack.DefinePlugin({
+      'STABLE_FEATURE': JSON.stringify(true),
+      'EXPERIMENTAL_FEATURE': JSON.stringify(false)
+    })
   ],
 
   // development, production, node
