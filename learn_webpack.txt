@@ -29,7 +29,6 @@ thế để đảm bảo rằng mỗi 1 file sẽ có tên độc nhật.
 trong trường hợp có "publicPath" của các tệp đầu ra không biết tại thời điểm compile time, có thể để trống hoặc set dynamic tại runtime thông quan
 biến "__webpack_public_path__" ở entry point
 
-
 -loaders: cho phép xử lý xử lý những loại file khác ở trong "module" nó có thể được sử dụng trong application của bạn
 và thêm các dependency, cho phép các developer build nhiều các dependency. cho phép bạn xử lý lại các tiến trình file mà bạn đã import hoặc load lại.
 loader giống như loại nhiệm vụ ở trong công cụ build, và cung cấp cách thức để tiến hành các bước build front-end. loaders có thể chuyển đổi ngôn
@@ -47,15 +46,38 @@ vói tiền tố "-!" sẽ disable toàn bộ configure loader (preloader, loade
 ví dụ: webpack --module-bind pug-loader --module-bind 'css=style-loader!css-loader'
 sử dụng the pug-loader for .jade files
 sử dụng style-loader and css-loader for .css files.
+ tính năng của loader:
+ - các loader là chuỗi các mắt xích. với mối loader ở trong mắt xích tác động sử biến bổi đến quá trình của resource. mỗi một mắt xích sẽ được thực thi
+ ở thứ tự ngược lại. loader đầu tiên sẽ pass qua cùng với results tiếp tục đến loader tiếp theo và vân vân, finally webpack sẽ mong chờ webpack sẽ
+ trả ra bởi loader cuối cùng của mắt xích.
+ - loader có thể synchronous or asynchronous
+ - loader run trên Node.js và có thể làm được nhiều thức trên đó.
+ - loader có thể được config cùng với options object.
+ - những module bình thường có thể export 1 loader ở trong, thêm vào đó main nomal thông qua webpack.json cùng với loader field.
+ - plugins có thể cho loader nhiều features.
+ - loader có thể phát ra, truyền đi nhiều file bất kì.
+loader cung cấp 1 cách thức có thể customize giá trị output thông qua chức năng tiền xử lý. người dùng bây giờ có thể có sự linh hoạt trong việc như
+nén, đóng gói, biên dịch ngôn ngữ
 
 
 loaders gồm 2 properties:
 + test: được định nghĩa là loại file sẽ được chuyển đổi
 + use: được  định nghĩa là loại loaders nào sẽ được chuyển đổi.
+
 -plugins : được sử dụng để chuyển đổi một số loại module, các plugins sẽ được sử dụng để thực thi các công việc rộng hơn như tối ưu hoá,
 quản lý assets
 -mode: setting webpack vớI các môi trường (production, development, none), bạn cũng có thể build webpack để tối ưu hoá
+là xương sống của webpack. webpack được xây dựng trên giống với plugin của hệ thống mà bạn sử dụng trên configuraion webpack của bạn.
+chúng được phục vụ cho mong muốn là làm tất cả những thứ mà loader không thể làm.
+webpack plugin là 1 object javascriptcó method "apply". method này được gọi bởi webpack compiler, và sẽ xác thực toàn bộ vòng trong compiler.
 
+configuraion webpack:
+việc cấu hình được xử lý bởi webpack dựa trên các thuộc tính xác thực của nó.
+import files thông qua require(...)
+import tiện ích (plugin) trên npm thông qua require(...)
+sử dụng javascript control thông qua các biểu thức ví dụ như ?: operator.
+sử dụng các hằng số hoặc biến cho việc sử dụng value.
+viết và thực thi các functions biên dịch 1 phần trong của configuraion.
 
 sử dụng với angular cần:
 
