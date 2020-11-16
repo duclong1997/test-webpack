@@ -111,3 +111,4 @@ enable the configuration for ng serve
   "path": "./custom-webpack.prod.config.js"
 },
 với 'custom-webpack.prod.config.js' là file custom webpack configuration của product.
+lưu ý: khi sử dụng webpack cần sử webpack và custom-webpack có version tương ứng cới version của angular.
