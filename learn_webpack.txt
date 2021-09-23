@@ -112,3 +112,121 @@ enable the configuration for ng serve
 },
 với 'custom-webpack.prod.config.js' là file custom webpack configuration của product.
 lưu ý: khi sử dụng webpack cần sử webpack và custom-webpack có version tương ứng cới version của angular.
+
+webpack:
+công cụ giúp bạn compile các module JS. tên gọi khác "module bundler" tĩnh
+webpack sử dụng cơ chế xây dụng một đồ thị phụ thuộc (dependency graph)
+ánh xạ tất cả module mà dự án càn và khởi tạo một hoặc nhiều bundlers
+set up:
+npm i -g webpack
+or
+npm i --save-dev webpack
+cần tạo file: webpack.config.js ở root thư mục dự án và webpack sẽ tự động hiểu nó.
+nếu bạn muốn sử dụng file khác cần sửa lại lệnh trong file package.json
+"scripts": {
+  "build": "webpack --config [TÊN_FILE]"
+}
+
+entry:
+là tên file đầu vào dể webpack biết được module đầu tiên để xây dựng đồ thị. phụ thuộc.
+mặc định: ./src/index.js
+ví dụ:
+file webpack.config.js:
+module.exports = {
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]'
+}
+or
+module.exports = {
+	entry: {
+        main:  '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    }
+}
+
+output:
+chỉ nơi file sau khi bundle sẽ dược lưu trữ và tên của file.
+mặc dịnh: ./dist/main.js
+ví dụ:
+file webpack.config.js
+module.exports = {
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    output: '[ĐƯỜNG_DẪN_OUTPUT_FILE]',
+}
+or
+const path = require('path');
+
+module.exports = {
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    output: {
+    	path: path.resolve(__dirname, '[THƯ_MỤC_OUTPUT]'),
+   		filename: '[TÊN_FILE_OUTPUT]'
+  	},
+}
+lưu ý:
+có thể sử dụng multi entry nhưng với output thì chỉ có một.
+
+loader:
+webpack chỉ hiểu được file js và json. leaer giúp webpack xác dịnh được các loại file khác nhau. và thêm nó vào trong ứng dụng.
+có 2 phương thức:
+test: chỉ ra file sẽ đưuọc chuyển đổi.
+user: chỉ loader được sử dụng để chuyển đổi.
+
+ví dụ:
+file webpack.config.js
+module.exports = {
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    output: '[ĐƯỜNG_DẪN_OUTPUT_FILE]',
+    rules: [
+  		{
+ 			test: /\.txt$/,
+			use: 'raw-loader'
+ 		},
+  	]
+}
+
+một số loader:
+babel-loader: transpile ES2015 code sử dụng Babel
+ts-loader hoặc awesome-typescript-loader: load file Typescript
+css-loader: load file CSS
+style-loader: Add exports of a module as style to DOM
+file-loader: Emits the file into the output folder and returns the (relative) URL
+html-loader: Exports HTML as string, require references to static resources
+
+plugins:
+để làm những nhiệm vụ lớn hơn như tối ưu bundle, quản lý asset
+đưa các biến môi trường  để sử dụng được 1 plugin càn "require()"
+và thêm nó vào mảng plugins.
+ví dụ:
+file webpack.config.js:
+const HtmlWebpackPlugin = require('html-webpack-plugin') // tạo file html và tự động inject các file sau khi bundle
+module.exports = {
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    output: '[ĐƯỜNG_DẪN_OUTPUT_FILE]',
+    rules: [
+  		{
+ 			test: /\.txt$/,
+			use: 'raw-loader'
+ 		},
+  	],
+ 	plugins: [ new HtmlWebpackPlugin() ]
+}
+
+mode:
+nhằm mục đích xác định môi trương:
+-development
+-production
+-none
+ví dụ:
+file webpack.config.js:
+const HtmlWebpackPlugin = require('html-webpack-plugin') // tạo file html và tự động inject các file sau khi bundle
+module.exports = {
+	mode: 'development'
+	entry: '[ĐƯỜNG_DẪN_ĐẾN_ENTRY_FILE]',
+    output: '[ĐƯỜNG_DẪN_OUTPUT_FILE]',
+    rules: [
+  		{
+ 			test: /\.txt$/,
+			use: 'raw-loader'
+ 		},
+  	],
+ 	plugins: [ new HtmlWebpackPlugin() ]
+}
